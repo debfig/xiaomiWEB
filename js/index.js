@@ -22,6 +22,44 @@ $(function() {
         })
     });
 
+
+
+    // 搜索切换 和得到焦点清除提示
+    let temp = 0;
+    let temes;
+
+    clearInterval(temes);
+    temes = null;
+
+    function inputTime() {
+        temes = setInterval(function() {
+            $.getJSON('JSON/data.json', function(data) {
+                if (temp < data.data.length - 1) {
+                    $('input').prop('placeholder', data.data[temp].word);
+                    temp++;
+                } else {
+                    $('input').prop('placeholder', data.data[data.data.length - 1].word);
+                    temp = 0;
+                }
+            });
+        }, 6 * 1000);
+    }
+
+    inputTime();
+
+    // $('input').on('blur', function() {
+    //     $('input').prop('placeholder', '红米')
+    //     clearInterval(temes);
+    //     temes = null;
+    //     inputTime();
+    // });
+    // $('input').on('focus', function() {
+    //     $('input').prop('placeholder', '');
+    //     clearInterval(temes);
+    //     temes = null;
+    // });
+
+
     //下拉tab栏切换
     $('.site-nav>ul>li').on('mouseover', function() {
         $('.site-tab>.site-tab-body>ul>li').stop().css('display', 'none');
